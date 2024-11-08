@@ -58,7 +58,7 @@ func (this *User) getOnlineUsers() {
 	for _, cli := range this.server.OnlineMap {
 		if cli.Name != this.Name {
 			// 将OnlineMap中的用户封装成数组返回出去
-			userSlice = append(userSlice, cli.Name+"在线!")
+			userSlice = append(userSlice, "【"+cli.Name+"】在线!")
 		} else {
 			continue
 		}
@@ -85,7 +85,7 @@ func (this *User) Rename(newName string) {
 		// 新增一个user
 		this.Name = newName
 		this.server.OnlineMap[newName] = this
-		this.conn.Write([]byte("名称更新成功！"))
+		this.conn.Write([]byte("名称【" + newName + "】，更新成功！"))
 	}
 	this.server.mapLock.Unlock()
 }
@@ -97,7 +97,7 @@ func (this *User) PrivateChat(userName, msg string) {
 		this.conn.Write([]byte("用户不存在"))
 	} else {
 		// 新增一个user
-		targetUser.C <- msg
+		targetUser.C <- "【" + this.Name + "】对你说：" + msg
 	}
 }
 

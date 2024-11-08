@@ -103,7 +103,7 @@ func (this *Server) Handler(conn net.Conn) {
 		select {
 		case <-user.isLive:
 			// 不需要做任何动作，因为select的特性，刷新select，等待下一个case的触发
-		case <-time.After(time.Second * 60):
+		case <-time.After(time.Second * 300):
 			fmt.Println("触发踢出行为！")
 			// 接收一个 10秒后触发的一个管道，
 			// 如果case触发成功，则证明10s内，用户无动作。则踢出
